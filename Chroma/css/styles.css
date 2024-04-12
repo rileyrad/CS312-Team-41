@@ -1,0 +1,179 @@
+/* COLOR SCHEME
+
+Background color with black text:
+https://webaim.org/resources/contrastchecker/?fcolor=000000&bcolor=CAB08D
+
+Background color with nav button / hr color:
+https://webaim.org/resources/contrastchecker/?fcolor=454545&bcolor=FFE4C4
+
+Member card / nav button background with white text color:
+https://webaim.org/resources/contrastchecker/?fcolor=F5F5F5&bcolor=454545
+
+Company header background color with white text color:
+https://webaim.org/resources/contrastchecker/?fcolor=F5F5F5&bcolor=2F4F4F
+*/
+
+body {
+    background-color: #ffe4c4;
+}
+
+h1, h2, h3, p {
+    font-family: "Gill Sans", sans-serif;
+}
+
+hr {
+    margin: 0;
+    height: 4px;
+    background: #454545;
+}
+
+main p {
+    font-size: 20px;
+    margin-left: 15%;
+    margin-right: 15%;    
+}
+
+footer p {
+    font-size: 12px;
+}
+
+/* Company header title and image styles */
+
+.company_header {
+    text-align: center;
+    margin: 0px;
+    background-color: #2f4f4f;
+}
+
+.company_header_element {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+}
+
+.company_header_element p {
+    color: whitesmoke;
+    font-style: italic;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 100px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.company_header_element img {
+    width: 100px;
+    height: 100px;
+    border-radius: 25px;
+}
+
+/* Navigation bar and page title styles */
+
+.title_nav_element {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+}
+
+.nav_bar {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.nav_bar button {
+    background-color: #454545;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    margin-left: 16px;
+}
+
+.nav_bar button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+/* Member card styles */
+
+.member_bios {
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    background-color: #454545;
+    border-radius: 20px;
+}
+
+.member_bios_element {
+    margin-top: 20px;
+}
+
+.member_bios_element h2 {
+    color: #f5f5f5;
+}
+
+.member_bios_element p {
+    font-size: 16px;
+    color: #f5f5f5;
+    padding-bottom: 20px;
+}
+
+.member_bios_element img {
+    padding-top: 20px;
+    border-radius: 25px;
+}
+
+/* Input forms */
+
+#tableForm {
+    margin: auto;
+    text-align: center;
+}
+
+#tableForm label {
+    font-family: "Gill Sans", sans-serif;
+    font-weight: bold;
+}
+
+.tableForm_div {
+    padding-top: 15px;
+}
+
+#tableForm_button, #printableViewButton {
+    background-color: #454545;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    margin-left: 16px;
+}
+
+#tableForm_button:hover, #printableViewButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+/* Table Formatting */
+
+.table_1, .table_2 {
+    width: 95%;
+}
+
+.table_1 td, .table_2 td {
+    text-align: center;
+}
+
+#printableViewButton_div {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: auto;
+    text-align: center;
+}
