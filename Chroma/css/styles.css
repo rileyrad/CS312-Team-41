@@ -126,6 +126,8 @@ footer p {
 .member_bios_element img {
     padding-top: 20px;
     border-radius: 25px;
+    max-width: 200px;
+    max-width: 200px;
 }
 
 /* Input forms */
