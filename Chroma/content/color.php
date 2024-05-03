@@ -77,7 +77,17 @@
 
             // initialize the radioButtons for setting table colors
             const radioButtons = document.querySelectorAll('input[type="radio"][name="selectedColor"]');
-            let chosenColor;
+            let chosenColor = '';
+
+            // function for updating, used for change in drop down
+            function updateChosenColor() {
+                radioButtons.forEach((radio, index) => {
+                    if (radio.checked) {
+                        chosenColor = selectedColors[`color${index}`];
+                        console.log("Chosen Color updated to:", chosenColor); // console log for debugging
+                    }
+                })
+            }
 
             selectors.forEach((selector, index) => {
                 const color = selector.value;
@@ -103,11 +113,16 @@
                     } else {
                         selectedColors[`color${index}`] = newColor;
                         messageElement.style.display = 'none';
+
+                        // Update chosen color if the current selectors radio button is checked
+                        if (radioButtons[index].checked) {
+                            updateChosenColor();
+                        }
                     }
                 });
             });
 
-            // set default chosen color before event listener
+            // set default chosen color before event listener (red)
             if (selectors.length > 0) {
                 chosenColor = selectedColors[`color0`]
                 console.log("Default Chosen Color:", chosenColor); // console log for debugging
@@ -118,9 +133,18 @@
                 radioButtons.addEventListener('change', function() {
                     if (this.checked) {
                         let index = parseInt(this.value.replace('color', ''));
-                        const chosenColor = selectedColors[`color${index}`]; // assign the color to selected
+                        chosenColor = selectedColors[`color${index}`]; // assign the color to selected
                         console.log("Chosen Color:", chosenColor); // console log for debugging
                     }
+                });
+            });
+
+            // Adding click event listeners to cells in the coordinate table
+            const tableCells = document.querySelectorAll('.table_2 td');
+            tableCells.forEach(cell => {
+                cell.addEventListener('click', function() {
+                    this.style.backgroundColor = chosenColor;
+                    console.log("coloring cell:", chosenColor); // console log for debugging
                 });
             });
 
