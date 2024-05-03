@@ -40,6 +40,9 @@
                     }
                 }
                 echo "</select></td>";
+                // Adding the radio
+                $checked = $i === 0 ? "checked" : ""; // Default the first row's radio button to be checked
+                echo "<td width='10%'><input type='radio' name='selectedColor' value='color$i' $checked></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -72,6 +75,10 @@
             const messageElement = document.getElementById('colorError');
             let selectedColors = {};
 
+            // initialize the radioButtons for setting table colors
+            const radioButtons = document.querySelectorAll('input[type="radio"][name="selectedColor"]');
+            let chosenColor;
+
             selectors.forEach((selector, index) => {
                 const color = selector.value;
                 selectedColors[`color${index}`] = selector.value;
@@ -96,6 +103,23 @@
                     } else {
                         selectedColors[`color${index}`] = newColor;
                         messageElement.style.display = 'none';
+                    }
+                });
+            });
+
+            // set default chosen color before event listener
+            if (selectors.length > 0) {
+                chosenColor = selectedColors[`color0`]
+                console.log("Default Chosen Color:", chosenColor); // console log for debugging
+            }
+
+            // add event listener to radio buttons to update the color chosen by the radio button, will use for changing table
+            radioButtons.forEach((radioButtons) => {
+                radioButtons.addEventListener('change', function() {
+                    if (this.checked) {
+                        let index = parseInt(this.value.replace('color', ''));
+                        const chosenColor = selectedColors[`color${index}`]; // assign the color to selected
+                        console.log("Chosen Color:", chosenColor); // console log for debugging
                     }
                 });
             });
