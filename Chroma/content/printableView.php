@@ -38,6 +38,10 @@
         .table_1 td, .table_2 td {
             text-align: center;
         }
+
+        .table_1 input[type="radio"] {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -56,9 +60,8 @@
             echo "<tr>";
             $i_1 = $i + 1;
             echo "<td width='20%'>Color $i_1</td>";
-            echo "<td width='80%'>";
-            echo "$option";
-            echo "</td>";
+            echo "<td width='40%'>{$option}</td>";
+            echo "<td width='40%'>Hex Code Here</td>"; 
             echo "</tr>";
             $i++;
         }
