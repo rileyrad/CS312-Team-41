@@ -42,6 +42,7 @@
         .table_1 input[type="radio"] {
             display: none;
         }
+
     </style>
 </head>
 <body>
@@ -53,15 +54,20 @@
         $rc = isset($_GET['rc']) ? $_GET['rc'] : null;
         $colors = isset($_GET['colors']) ? $_GET['colors'] : null;
         $selectedColors = isset($_GET['selectedColors']) ? json_decode($_GET['selectedColors'], true) : [];
-
+        $colorCoordinates = isset($_GET['colorCoordinates']) ? json_decode($_GET['colorCoordinates'], true) : [];
+        
         echo "<table class='table_1' border='1'>";
         $i = 0;
-        foreach ($selectedColors as $option) {
+        foreach ($selectedColors as $index => $option) {
             echo "<tr>";
             $i_1 = $i + 1;
             echo "<td width='20%'>Color $i_1</td>";
-            echo "<td width='40%'>{$option}</td>";
-            echo "<td width='40%'>Hex Code Here</td>"; 
+            echo "<td width='20%'>{$option}</td>";
+            echo "<td width='10%'>Hex Code Here</td>"; 
+            echo "<td width='30%' class='colorCoords' id='colorCoords$i'>";
+            if (isset($colorCoordinates[$index])) {
+                echo implode(', ', $colorCoordinates[$index]);
+            }
             echo "</tr>";
             $i++;
         }
