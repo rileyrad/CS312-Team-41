@@ -170,12 +170,15 @@
                         const rowIndex = this.parentNode.rowIndex;
                         this.dataset.coord = `${String.fromCharCode(65 + colIndex - 1)}${rowIndex}`; // Adjust column index for letter and row index for number
                     }
-                    this.style.backgroundColor = chosenColor;
-                    const colorIndex = [...radioButtons].findIndex(radio => radio.checked); // Find the index of the currently selected color
-                    colorCoordinates[`color${colorIndex}`].push(this.dataset.coord); // Add coordinate to the color's array
-                    updateColorCoordinates(colorIndex); // Update coordinates in the HTML
-                    
-                    console.log("coloring cell:", chosenColor); // console log for debugging
+
+                    if (this.cellIndex != 0 && this.parentNode.rowIndex != 0) {
+                        this.style.backgroundColor = chosenColor;
+                        const colorIndex = [...radioButtons].findIndex(radio => radio.checked); // Find the index of the currently selected color
+                        colorCoordinates[`color${colorIndex}`].push(this.dataset.coord); // Add coordinate to the color's array
+                        updateColorCoordinates(colorIndex); // Update coordinates in the HTML
+                        
+                        console.log("coloring cell:", chosenColor); // console log for debugging
+                    }
                 });
             });
 
