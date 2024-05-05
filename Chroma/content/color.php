@@ -31,7 +31,7 @@
                 echo "<tr>";
                 $i_1 = $i + 1;
                 echo "<td width='20%'>Color $i_1</td>";
-                echo "<td width='80%'><select class='colorSelectors' name='color$i'>";
+                echo "<td width='20%'><select class='colorSelectors' name='color$i'>";
                 foreach ($color_options as $option) {
                     if ($option == $color_options[$i]) {
                         echo "<option value='$option' selected='true'>$option</option>";
@@ -188,7 +188,8 @@
                 const params = new URLSearchParams({
                     rc, 
                     colors, 
-                    selectedColors: JSON.stringify(selectedColors)
+                    selectedColors: JSON.stringify(selectedColors),
+                    colorCoordinates: JSON.stringify(colorCoordinates)
                 }).toString();
                 window.location.href = `content/printableView.php?${params}`;
             });
