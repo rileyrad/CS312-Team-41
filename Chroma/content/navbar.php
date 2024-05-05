@@ -11,6 +11,10 @@
                 <input type="hidden" name="page" value="color.php">
                 <button type="submit">Color Coordinator</button>
             </form>
+            <form action="index.php" method="get" style="display:inline;">
+                <input type="hidden" name="page" value="database.php">
+                <button type="submit">Color Selection</button>
+            </form>
         </nav>
     </div>
 </header>
