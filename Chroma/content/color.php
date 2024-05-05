@@ -43,6 +43,7 @@
                 // Adding the radio
                 $checked = $i === 0 ? "checked" : ""; // Default the first row's radio button to be checked
                 echo "<td width='10%'><input type='radio' name='selectedColor' value='color$i' $checked></td>";
+                echo "<td id='colorCoords$i' class='colorCoords'></td>"; // New column for coordinates
                 echo "</tr>";
             }
             echo "</table>";
@@ -74,6 +75,7 @@
             const selectors = document.querySelectorAll('.colorSelectors');
             const messageElement = document.getElementById('colorError');
             let selectedColors = {};
+            let colorCoordinates = {};
 
             // initialize the radioButtons for setting table colors
             const radioButtons = document.querySelectorAll('input[type="radio"][name="selectedColor"]');
@@ -89,10 +91,27 @@
                 })
             }
 
+            // Function to update coordinates in the HTML
+            function updateColorCoordinates(index) {
+                const coordList = colorCoordinates[`color${index}`] || [];
+                const sortedCoords = coordList.sort((a, b) => a.localeCompare(b)); // Sort coordinates lexicographically
+                document.getElementById(`colorCoords${index}`).innerText = sortedCoords.join(', ');
+            }    
+
+            function updateCellColors(oldColor, newColor) {
+                const tableCells = document.querySelectorAll('.table_2 td');
+                tableCells.forEach(cell => {
+                    if (cell.style.backgroundColor === oldColor) {
+                        cell.style.backgroundColor = newColor;
+                    }
+                });
+            }
+
             selectors.forEach((selector, index) => {
                 const color = selector.value;
                 selectedColors[`color${index}`] = selector.value;
                 selector.setAttribute('data-prev', selector.value);
+                colorCoordinates[`color${index}`] = []; // Initialize empty array for coordinates
 
                 selector.addEventListener('change', function() {
                     const oldColor = selectedColors[`color${index}`];
@@ -118,6 +137,8 @@
                         if (radioButtons[index].checked) {
                             updateChosenColor();
                         }
+
+                        updateCellColors(oldColor, newColor);
                     }
                 });
             });
@@ -143,7 +164,17 @@
             const tableCells = document.querySelectorAll('.table_2 td');
             tableCells.forEach(cell => {
                 cell.addEventListener('click', function() {
+
+                    if (!this.dataset.coord) { // Store coordinates data-attribute if not already set
+                        const colIndex = this.cellIndex;
+                        const rowIndex = this.parentNode.rowIndex;
+                        this.dataset.coord = `${String.fromCharCode(65 + colIndex - 1)}${rowIndex}`; // Adjust column index for letter and row index for number
+                    }
                     this.style.backgroundColor = chosenColor;
+                    const colorIndex = [...radioButtons].findIndex(radio => radio.checked); // Find the index of the currently selected color
+                    colorCoordinates[`color${colorIndex}`].push(this.dataset.coord); // Add coordinate to the color's array
+                    updateColorCoordinates(colorIndex); // Update coordinates in the HTML
+                    
                     console.log("coloring cell:", chosenColor); // console log for debugging
                 });
             });
