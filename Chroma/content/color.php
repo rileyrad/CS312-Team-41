@@ -189,7 +189,8 @@
                     rc, 
                     colors, 
                     selectedColors: JSON.stringify(selectedColors),
-                    colorCoordinates: JSON.stringify(colorCoordinates)
+                    colorCoordinates: JSON.stringify(colorCoordinates),
+                    // hexCodes: JSON.stringify(hexCodes)
                 }).toString();
                 window.location.href = `content/printableView.php?${params}`;
             });

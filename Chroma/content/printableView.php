@@ -33,10 +33,19 @@
 
         .table_1, .table_2 {
             width: 95%;
+            border-color: black;
+            border-width: 3px;
+            border-radius: 5px;
+            border-style: solid;
+            border-spacing: 0px;
         }
 
         .table_1 td, .table_2 td {
             text-align: center;
+            border-color: black;
+            border-width: 1px;
+            border-style: solid;
+            padding: 0px;
         }
 
         .table_1 input[type="radio"] {
@@ -55,6 +64,7 @@
         $colors = isset($_GET['colors']) ? $_GET['colors'] : null;
         $selectedColors = isset($_GET['selectedColors']) ? json_decode($_GET['selectedColors'], true) : [];
         $colorCoordinates = isset($_GET['colorCoordinates']) ? json_decode($_GET['colorCoordinates'], true) : [];
+        $hexCodes = isset($_GET['hexCodes']) ? json_decode($_GET['hexCodes'], true) : [];
         
         echo "<table class='table_1' border='1'>";
         $i = 0;
