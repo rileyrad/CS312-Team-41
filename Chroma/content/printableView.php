@@ -33,10 +33,19 @@
 
         .table_1, .table_2 {
             width: 95%;
+            border-color: black;
+            border-width: 3px;
+            border-radius: 5px;
+            border-style: solid;
+            border-spacing: 0px;
         }
 
         .table_1 td, .table_2 td {
             text-align: center;
+            border-color: black;
+            border-width: 1px;
+            border-style: solid;
+            padding: 0px;
         }
 
         .table_1 input[type="radio"] {
@@ -55,6 +64,9 @@
         $colors = isset($_GET['colors']) ? $_GET['colors'] : null;
         $selectedColors = isset($_GET['selectedColors']) ? json_decode($_GET['selectedColors'], true) : [];
         $colorCoordinates = isset($_GET['colorCoordinates']) ? json_decode($_GET['colorCoordinates'], true) : [];
+        $hexCodes = isset($_GET['hexCodes']) ? json_decode($_GET['hexCodes'], true) : [];
+        // $hexCodes = isset($_GET['hexCodes']) ? $_GET['hexCodes'] : null;
+        // $hexCodes = json_decode(urldecode($hexCodes), true);
         
         echo "<table class='table_1' border='1'>";
         $i = 0;
@@ -63,7 +75,7 @@
             $i_1 = $i + 1;
             echo "<td width='20%'>Color $i_1</td>";
             echo "<td width='20%'>{$option}</td>";
-            echo "<td width='10%'>Hex Code Here</td>"; 
+            echo "<td width='10%'>{$hexCodes[$i]}</td>"; 
             echo "<td width='30%' class='colorCoords' id='colorCoords$i'>";
             if (isset($colorCoordinates[$index])) {
                 echo implode(', ', $colorCoordinates[$index]);
