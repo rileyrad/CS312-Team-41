@@ -7,11 +7,16 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "add_color.php",
+            url: "content/add_color.php",
             data: formData,
             success: function(response) {
 
                 $("#addError").text(response);
+                $("#colorName").val("");
+                $("#colorHex").val("");
+            },
+            error: function(xhr, status, error) {
+                $("#addError").text("Error: " + error);
             }
         });
     });
