@@ -81,7 +81,7 @@
             const radioButtons = document.querySelectorAll('input[type="radio"][name="selectedColor"]');
             let chosenColor = '';
 
-            // function for updating, used for change in drop down
+            // function for updating cells already colored, used for change in drop down
             function updateChosenColor() {
                 radioButtons.forEach((radio, index) => {
                     if (radio.checked) {
@@ -174,8 +174,25 @@
                     if (this.cellIndex != 0 && this.parentNode.rowIndex != 0) {
                         this.style.backgroundColor = chosenColor;
                         const colorIndex = [...radioButtons].findIndex(radio => radio.checked); // Find the index of the currently selected color
-                        colorCoordinates[`color${colorIndex}`].push(this.dataset.coord); // Add coordinate to the color's array
-                        updateColorCoordinates(colorIndex); // Update coordinates in the HTML
+                        const coord = this.dataset.coord; // get the coord to check if it exists
+
+                        // This is for removing cell index from other color if it has been selected
+                        Object.keys(colorCoordinates).forEach(key => {
+
+                            // if the cor already exists
+                            if (key !== `color${colorIndex}` && colorCoordinates[key].includes(coord)) {
+                                const index = colorCoordinates[key].indexOf(coord);
+                                if (index > -1) {
+                                    colorCoordinates[key].splice(index, 1); // Remove the coordinate
+                                    updateColorCoordinates(parseInt(key.replace('color', ''))); // Update HTML for removed coordinate
+                                }
+                            }
+                        });
+                        // Check if the coordinate is not already in the array before adding it to avoid dupes
+                        if (!colorCoordinates[`color${colorIndex}`].includes(coord)) {
+                            colorCoordinates[`color${colorIndex}`].push(coord);
+                            updateColorCoordinates(colorIndex); // Update coordinates in the HTML
+                        }
                         
                         console.log("coloring cell:", chosenColor); // console log for debugging
                     }
