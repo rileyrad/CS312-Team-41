@@ -2,41 +2,48 @@
     <form id="tableForm">
         <div class="tableForm_div"><label for="rc">Rows & Columns (1-26):</label>
         <input type="number" id="rc" name="rc"><br></div>
-        <div class="tableForm_div"><label for="colors">Number of Colors (1-10):</label>
-        <input type="number" id="colors" name="colors"><br></div>
+        <div class="tableForm_div"><label for="num_colors">Number of Colors:</label>
+        <input type="number" id="num_colors" name="num_colors"><br></div>
         <input type="hidden" name="page" value="color.php">
         <div class="tableForm_div"><button type="submit" id="tableForm_button">Generate Tables</button><br></div>
     </form>
     <?php
+        ob_start();
+        include 'get_colors.php';
+        $color_json = ob_get_clean();
+        $color_options = json_decode($color_json, true);
+    
         $rc = isset($_GET['rc']) ? $_GET['rc'] : null;
-        $colors = isset($_GET['colors']) ? $_GET['colors'] : null;    
+        $num_colors = isset($_GET['num_colors']) ? $_GET['num_colors'] : null;    
 
         $validity = true;
         if ($rc < 1 || $rc > 26) {
             $validity = false;
             echo "<p>Invalid row & column parameter, must be in between 1 and 26.</p><br>";
         } 
-        if ($colors < 1 || $colors > 10) {
+        if ($num_colors < 1 || $num_colors > count($color_options)) {
             $validity = false;
-            echo "<p>Invalid color parameter, must be in between 1 and 10.</p><br>";
+            echo "<p>Invalid color parameter.</p><br>";
         } 
+        if (empty($color_options)) {
+            $validity = false;
+            echo "<p>Color table is empty.</p><br>";
+        }
         if ($validity) {
-            $color_options = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'grey', 'brown', 'black', 'teal'];
-
             echo "<h2>Color Coordinate Generation</h2>";
-            echo "<h3>Table with $colors colors</h3>";
+            echo "<h3>Table with $num_colors colors</h3>";
             echo "<p id='colorError'></p>";
             echo "<table class='table_1' border='1'>";
-            for ($i = 0; $i < $colors; $i++) {
+            for ($i = 0; $i < $num_colors; $i++) {
                 echo "<tr>";
                 $i_1 = $i + 1;
                 echo "<td width='20%'>Color $i_1</td>";
                 echo "<td width='20%'><select class='colorSelectors' name='color$i'>";
                 foreach ($color_options as $option) {
                     if ($option == $color_options[$i]) {
-                        echo "<option value='$option' selected='true'>$option</option>";
+                        echo "<option value='{$option['name']}' selected='true'>{$option['name']}</option>";
                     } else {
-                        echo "<option value='$option'>$option</option>";
+                        echo "<option value='{$option['name']}'>{$option['name']}</option>";
                     }
                 }
                 echo "</select></td>";
@@ -77,7 +84,7 @@
             let selectedColors = {};
             let colorCoordinates = {};
 
-            // initialize the radioButtons for setting table colors
+            // initialize the radioButtons for setting table num_colors
             const radioButtons = document.querySelectorAll('input[type="radio"][name="selectedColor"]');
             let chosenColor = '';
 
@@ -199,15 +206,22 @@
                 });
             });
 
-            document.getElementById('printableViewButton').addEventListener('click', function() {
+            document.getElementById('printableViewButton').addEventListener('click', function() {   
+                const color_options = <?php echo json_encode($color_options); ?>;
+                let hexCodes = [];
+                color_options.forEach(code => {
+                    hexCodes.push(code['hex']);
+                });
+
                 const rc = <?php echo json_encode($rc); ?>;
-                const colors = <?php echo json_encode($colors); ?>;
+                const num_colors = <?php echo json_encode($num_colors); ?>;
+                
                 const params = new URLSearchParams({
                     rc, 
-                    colors, 
+                    num_colors, 
                     selectedColors: JSON.stringify(selectedColors),
                     colorCoordinates: JSON.stringify(colorCoordinates),
-                    // hexCodes: JSON.stringify(hexCodes)
+                    hexCodes: JSON.stringify(hexCodes)
                 }).toString();
                 window.location.href = `content/printableView.php?${params}`;
             });
